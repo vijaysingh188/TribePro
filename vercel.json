@@ -1,28 +1,13 @@
 {
-    "version": 2,
-    "builds": [
-      {
+    "builds": [{
         "src": "tribe/wsgi.py",
         "use": "@vercel/python",
-        "config": { 
-          "maxLambdaSize": "15mb", 
-          "runtime": "python3.12" 
-        }
-      }
-    ],
+        "config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
+    }],
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "tribe/wsgi.py"
-      },
-      {
-        "src": "/static/(.*)",
-        "dest": "/static/$1"
-      },
-      {
-        "src": "/media/(.*)",
-        "dest": "/media/$1"
-      }
+        {
+            "src": "/(.*)",
+            "dest": "tribe/wsgi.py"
+        }
     ]
-  }
-  
+}
