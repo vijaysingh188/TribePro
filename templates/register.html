@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Register{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .modal-header {
+            border-bottom: none;
+        }
+        .form-control {
+            border-radius: 20px;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border-radius: 20px;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+        background-color: #343a40;
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <header class="text-center mt-5">
+        <h4>Welcome to Tribe Pool And Cafe</h4>
+        <!-- <p>Join us and start your journey!</p> -->
+    </header>
+
+    <!-- Button to open modal -->
+    <div class="text-center mt-4">
+        <button id="signupModalBtn" class="btn btn-primary btn-lg">Sign Up</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="text" name="username" class="form-control" placeholder="Username" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" name="password1" class="form-control" placeholder="Password" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" name="password2" class="form-control" placeholder="Confirm Password" required>
+                        </div>
+                        <div id="formErrors" class="text-danger"></div>
+                        <button type="submit" class="btn btn-custom">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5">
+        <p>&copy; 2024 Tribe Pool And Cafe All rights reserved.</p>
+    </footer>
+    <script>
+        $(document).ready(function() {
+            $('#signupModalBtn').on('click', function() {
+                $('#formErrors').html(''); // Clear previous errors
+                $('#signupForm')[0].reset(); // Reset form fields
+                $('#signupModal').modal('show');
+            });
+        
+            $('#signupForm').on('submit', function(event) {
+                event.preventDefault();
+                let formData = new FormData(this);
+                
+                fetch('{% url "register" %}', {  // Change this to the correct URL name for the registration
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert('Registration successful!');
+                        $('#signupModal').modal('hide');
+                        window.location.href = '/login_view'; // Adjust as needed
+                    } else {
+                        let errors = data.errors;
+                        $('#formErrors').html('');
+                        for (let field in errors) {
+                            $('#formErrors').append(`<p>${field}: ${errors[field].join(', ')}</p>`);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                    $('#formErrors').html('<p>An error occurred. Please try again later.</p>');
+                });
+            });
+        });
+    </script>
+        
+</body>
+</html>
