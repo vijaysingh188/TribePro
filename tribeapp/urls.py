@@ -11,6 +11,7 @@ urlpatterns = [
     path('destroyevent/<int:module_id>',views.destroyevent,name="destroyevent"),
     path('add_amount/', views.add_amount, name='add_amount'),
     path('logout/', views.logout_view, name='logout'),
+    path("",views.home, name='home')
    
 
 ]
