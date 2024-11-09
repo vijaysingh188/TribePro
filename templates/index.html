@@ -12,13 +12,13 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-image: url("{% static 'background/billards.jpg' %}");
+            background-image: url("{% static 'background/billards2.png' %}");
             background-size: cover;
             background-position: center;
             color: #f8f9fa;
         }
         .navbar {
-        background-color: #343a40;
+        background-color: #090e13;
     }
 
     .navbar-brand,
@@ -27,7 +27,8 @@
     }
 
     .background-color {
-        background-color: rgb(128, 128, 118);
+        background-color: rgb(17, 17, 9);
+        /* background-image: url("{% static 'background/billards.jpg' %}"); */
     }
 
     .footer {
@@ -55,7 +56,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">Tribe</a>
+            <a class="navbar-brand" href="{% url 'website_page' %}">Tribe</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -65,9 +66,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'index' %}">Book table</a>
                     </li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'bookingpageview' %}">Bookings History</a>
                     </li>
+                    {% endif %}
                     {% if not user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'register' %}">Register</a>
@@ -84,26 +87,29 @@
     
                 {% if user.is_authenticated %}
                     <span class="navbar-text ms-auto">Welcome, {{ user.username }}!</span>
+                {% else %}
+                    <span class="navbar-text ms-auto">Welcome, user!</span>
                 {% endif %}
+
             </div>
         </div>
     </nav>
     
     <!-- Table Form Section -->
     <div class="container mt-4 ">
-        <h2 class="text-center mb-3">Table Form</h2>
+        <!-- <h2 class="text-center mb-3">Table Form</h2> -->
         {% if message %}
-        <div class="alert alert-warning" role="alert">
-            {{ message }}
-        </div>
+    <div class="alert {% if 'success' in message %}alert-success{% elif 'error' in message %}alert-danger{% else %}alert-warning{% endif %}" role="alert">
+        {{ message }}
+    </div>
         {% endif %}
         <div class="card">  
-            <div class="card-header text-center" style="background-color: #007bff; color: white;">
+            <div class="card-header text-center" style="background-color: #6e7174; color: white;">
 
                 Fill Out the Form
             </div>
             <div class="card-body background-color">
-                <form method="POST" class="needs-validation" novalidate>
+                <!-- <form method="POST" class="needs-validation" novalidate>
                     {% csrf_token %}
                     
                     {% for field in form %}
@@ -124,7 +130,57 @@
                     <div class="d-grid gap-2 mt-2">
                         <button type="submit" class="btn btn-success btn-lg">Submit Product</button>
                     </div>
+                </form> -->
+                <form method="POST" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    
+                    <!-- Start Time and AM/PM Field -->
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-3 col-form-label" for="start_timing">Start Time</label>
+                        <div class="col-sm-6">
+                            {{ form.start_timing }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form.start_am_pm }}
+                        </div>
+                    </div>
+                
+                    <!-- End Time and AM/PM Field -->
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-3 col-form-label" for="end_time">End Time</label>
+                        <div class="col-sm-6">
+                            {{ form.end_time }}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ form.end_am_pm }}
+                        </div>
+                    </div>
+                
+                    <!-- Additional Fields (If Any) -->
+                    {% for field in form %}
+                        {% if field.name not in 'start_timing start_am_pm end_time end_am_pm' %}
+                            <div class="row mb-3 align-items-center">
+                                <label class="col-sm-3 col-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                <div class="col-sm-9">
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <div class="text-danger">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <!-- Submit Button -->
+                    <div class="d-grid gap-2 mt-2">
+                        <button type="submit" class="btn btn-success btn-lg">Submit Product</button>
+                    </div>
                 </form>
+                
+                
             </div>
         </div>
     </div>

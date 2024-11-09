@@ -32,14 +32,48 @@ class TableForm(forms.ModelForm):
     #     (4, 4),
     # ]
 
+    TIME_CHOICES = [('AM', 'AM'), ('PM', 'PM')]
+
 
     tablename = forms.ChoiceField(choices=TABLENAMES, widget=forms.Select)
     # tablenumber = forms.ChoiceField(choices=TABLENUMBERS, widget=forms.Select)
 
-    start_timing = forms.CharField(label="Start Time", max_length=5, 
-                                  widget=forms.TextInput(attrs={'placeholder': 'HH:MM', 'pattern': '([01]?[0-9]|2[0-3]):[0-5][0-9]', 'title': 'Enter time in HH:MM format'}))
-    end_time = forms.CharField(label="End Time", max_length=5, 
-                                widget=forms.TextInput(attrs={'placeholder': 'HH:MM', 'pattern': '([01]?[0-9]|2[0-3]):[0-5][0-9]', 'title': 'Enter time in HH:MM format'}))
+    # start_timing = forms.CharField(label="Start Time", max_length=5, 
+    #                               widget=forms.TextInput(attrs={'placeholder': 'HH:MM', 'pattern': '([01]?[0-9]|2[0-3]):[0-5][0-9]', 'title': 'Enter time in HH:MM format'}))
+    # end_time = forms.CharField(label="End Time", max_length=5, 
+    #                             widget=forms.TextInput(attrs={'placeholder': 'HH:MM', 'pattern': '([01]?[0-9]|2[0-3]):[0-5][0-9]', 'title': 'Enter time in HH:MM format'}))
+    start_timing = forms.CharField(
+        label="Start Time",
+        max_length=5,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'HH:MM', 
+            'pattern': '([01]?[0-9]|2[0-3]):[0-5][0-9]', 
+            'title': 'Enter time in HH:MM format'
+        })
+    )
+    start_am_pm = forms.ChoiceField(
+        choices=TIME_CHOICES, 
+        label="Start Time AM/PM", 
+        widget=forms.Select()
+    )
+
+    end_time = forms.CharField(
+        label="End Time",
+        max_length=5,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'HH:MM', 
+            'pattern': '([01]?[0-9]|2[0-3]):[0-5][0-9]', 
+            'title': 'Enter time in HH:MM format'
+        })
+    )
+
+    end_am_pm = forms.ChoiceField(
+        choices=TIME_CHOICES, 
+        label="End Time AM/PM", 
+        widget=forms.Select()
+    )
+
+
     date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))  # Date picker
 
     class Meta:

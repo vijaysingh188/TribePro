@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tribe Pool & Cafe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #222;
+  color: #fff;
+  line-height: 1.6;
+}
+
+.hero {
+  background: url("{% static 'background/billards2.png' %}") no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.cta {
+  background: #e91e63;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+section {
+  padding: 40px;
+  text-align: center;
+}
+
+.about ul {
+  list-style-type: none;
+  margin-top: 20px;
+}
+
+.about ul li {
+  font-size: 1.2rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.contact address p {
+  margin-bottom: 10px;
+}
+
+footer {
+  background: #111;
+  color: #aaa;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #e91e63;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+</style>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome to Tribe Pool & Cafe</h1>
+    <p>Where Great Games and Great Coffee Meet</p>
+    <a href="{% url 'index' %}" class="cta">Book a Table</a>
+  </section>
+
+  <!-- About Us Section -->
+  <section class="about" id="about">
+    <h2>About Us</h2>
+    <p>Your spot for premium pool tables, specialty coffee, and live music nights.</p>
+    <ul>
+      <li>Premium pool tables and cues</li>
+      <li>Specialty coffee and refreshments</li>
+      <li>Live music nights & tournaments</li>
+    </ul>
+  </section>
+
+  <!-- Menu Section -->
+  <section class="menu" id="menu">
+    <h2>Our Menu</h2>
+    <p>Enjoy our coffee, drinks, and food options tailored to your taste.</p>
+    <!-- <br> -->
+    <!-- <a href="#full-menu" class="cta">See Full Menu</a> -->
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="gallery" id="gallery">
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+      <img src="{% static 'background/billards.jpg' %}" alt="Pool table">
+      <img src="{% static 'background/hookha2.jpg' %}" alt="Pot">
+      <img src="{% static 'background/coffee.jpg' %}" alt="Coffee">
+      <img src="{% static 'background/sound.jpg' %}" alt="Music">
+      
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <p>Visit us or reach out to book a table or learn more.</p>
+    <address>
+      <p><strong>Address:</strong> 123 Pool Street, Your City</p>
+      <p><strong>Phone:</strong> (123) 456-7890</p>
+      <p><strong>Email:</strong> info@yourpoolcafe.com</p>
+    </address>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Tribe Pool & Cafe | Follow us on:
+      <a href="#">Facebook</a> | <a href="#">Instagram</a>
+    </p>
+  </footer>
+
+</body>
+</html>

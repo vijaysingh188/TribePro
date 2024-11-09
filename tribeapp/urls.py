@@ -4,6 +4,7 @@ from .scripts.mainapppage import MainPageView,bookingpageview
 
 
 urlpatterns = [
+    path("",views.website_page, name='website_page'),
     path('index/', MainPageView.as_view(), name='index'),
     path('register/', views.register, name='register'),
     path('bookingpageview/', bookingpageview.as_view(), name='bookingpageview'),
@@ -11,7 +12,7 @@ urlpatterns = [
     path('destroyevent/<int:module_id>',views.destroyevent,name="destroyevent"),
     path('add_amount/', views.add_amount, name='add_amount'),
     path('logout/', views.logout_view, name='logout'),
-    path("",views.home, name='home')
+    # path("",views.home, name='home')
    
 
 ]

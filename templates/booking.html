@@ -18,6 +18,8 @@
         body {
             font-family: Arial, sans-serif;
             background-image: url("{% static 'background/images1.jfif' %}");
+            /* background-image: url("{% static 'background/billards2.png' %}"); */
+
             background-size: cover;
             background-position: center;
             color: #7ba9d6;
@@ -67,7 +69,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">Tribe</a>
+            <a class="navbar-brand" href="{% url 'website_page' %}">Tribe</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -77,9 +79,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'index' %}">Book table</a>
                     </li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'bookingpageview' %}">Bookings History</a>
                     </li>
+                    {% endif %}
                     {% if not user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'register' %}">Register</a>
@@ -96,6 +100,8 @@
     
                 {% if user.is_authenticated %}
                     <span class="navbar-text ms-auto">Welcome, {{ user.username }}!</span>
+                {% else %}
+                    <span class="navbar-text ms-auto">Welcome, user!</span>
                 {% endif %}
             </div>
         </div>
@@ -105,7 +111,7 @@
     
 
     <div class="container mt-5">
-        <h1 class="mb-4">Table List</h1>
+        <!-- <h1 class="mb-4">Table List</h1> -->
         <table id="datatable" class="table table-striped">
             <thead>
                 <tr>

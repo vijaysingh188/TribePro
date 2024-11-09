@@ -11,8 +11,11 @@ from django.contrib.auth import logout
 
 # Create your views here.
 
-def home(request):
-    return render(request, 'home.html')
+def website_page(request):
+    return render(request, 'website.html')
+
+# def home(request):
+#     return render(request, 'home.html')
 
 def register(request):
     if request.method == 'POST':
