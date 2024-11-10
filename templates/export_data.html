@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -79,6 +80,7 @@
                             <a class="nav-link" href="{% url 'login_view' %}">Login</a>
                         </li>
                     {% else %}
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'download_report' %}">Download Report</a>
                         </li>
@@ -112,90 +114,37 @@
                 Fill Out the Form
             </div>
             <div class="card-body background-color">
-                <!-- <form method="POST" class="needs-validation" novalidate>
+                <form method="POST" class="needs-validation" novalidate>
                     {% csrf_token %}
                     
-                    {% for field in form %}
-                        <div class="row mb-3 align-items-center">
-                            <label class="col-sm-3 col-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            <div class="col-sm-9">
-                                {{ field }}
-                                {% if field.help_text %}
-                                    <small class="form-text text-muted">{{ field.help_text }}</small>
-                                {% endif %}
-                                {% for error in field.errors %}
-                                    <div class="text-danger">{{ error }}</div>
-                                {% endfor %}
-                            </div>
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-3 col-form-label" for="id_start_date">Start Date</label>
+                        <div class="col-sm-3">
+                            {{ form.start_date }}
                         </div>
-                    {% endfor %}
-                    
-                    <div class="d-grid gap-2 mt-2">
-                        <button type="submit" class="btn btn-success btn-lg">Submit Product</button>
                     </div>
-                </form> -->
-                <form method="POST" class="needs-validation" novalidate>
-    {% csrf_token %}
-    
-    <!-- Table Name and Table Status at the Top -->
-    <div class="row mb-3 align-items-center">
-        <label class="col-sm-3 col-form-label" for="tablename">Table Name</label>
-        <div class="col-sm-4">
-            {{ form.tablename }}
-        </div>
-        <label class="col-sm-2 col-form-label" for="table_status">Table Status</label>
-        <div class="col-sm-3">
-            {{ form.table_status }}
-        </div>
-    </div>
-    
-    <!-- Start Time and AM/PM Field -->
-    <div class="row mb-3 align-items-center">
-        <label class="col-sm-3 col-form-label" for="start_timing">Start Time</label>
-        <div class="col-sm-6">
-            {{ form.start_timing }}
-        </div>
-        <div class="col-sm-3">
-            {{ form.start_am_pm }}
-        </div>
-    </div>
-
-    <!-- End Time and AM/PM Field -->
-    <div class="row mb-3 align-items-center">
-        <label class="col-sm-3 col-form-label" for="end_time">End Time</label>
-        <div class="col-sm-6">
-            {{ form.end_time }}
-        </div>
-        <div class="col-sm-3">
-            {{ form.end_am_pm }}
-        </div>
-    </div>
-
-    <!-- Additional Fields (If Any) -->
-    {% for field in form %}
-        {% if field.name not in 'tablename table_status start_timing start_am_pm end_time end_am_pm' %}
-            <div class="row mb-3 align-items-center">
-                <label class="col-sm-3 col-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                <div class="col-sm-9">
-                    {{ field }}
-                    {% if field.help_text %}
-                        <small class="form-text text-muted">{{ field.help_text }}</small>
-                    {% endif %}
-                    {% for error in field.errors %}
-                        <div class="text-danger">{{ error }}</div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
-    {% endfor %}
-    
-    <!-- Submit Button -->
-    <div class="d-grid gap-2 mt-2">
-        <button type="submit" class="btn btn-success btn-lg">Submit Product</button>
-    </div>
-</form>
-
                 
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-3 col-form-label" for="id_end_date">End Date</label>
+                        <div class="col-sm-3">
+                            {{ form.end_date }}
+                        </div>
+                    </div>
+                
+                    <div class="row mb-3 align-items-center">
+                        <label class="col-sm-3 col-form-label" for="id_table">Choose Table</label>
+                        <div class="col-sm-3">
+                            {{ form.table }}
+                        </div>
+                    </div>
+                
+                    <div class="d-grid gap-2 mt-2">
+                        <button type="submit" class="btn btn-success btn-lg">Submit Booking</button>
+                    </div>
+                </form>
+                
+
+             
                 
             </div>
         </div>
@@ -213,3 +162,4 @@
 </body>
 
 </html>
+

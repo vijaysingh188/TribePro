@@ -81,3 +81,32 @@ class TableForm(forms.ModelForm):
         fields = ['tablename', 'tablestatus', 'start_timing', 'end_time', 'date','amount','extra_allowances']
 
 
+class BookingForm(forms.Form):
+    TABLENAMES = [
+        ('None', 'None'),
+        ('TableA', 'TableA'),
+        ('TableB', 'TableB'),
+        ('TableC', 'TableC'),
+        ('TableD', 'TableD'),
+    ]
+    start_date = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-control'
+        }),
+        label="Start Date"
+    )
+    end_date = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-control'
+        }),
+        label="End Date"
+    )
+    table = forms.ChoiceField(
+        choices=TABLENAMES,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        required=False
+    )
+

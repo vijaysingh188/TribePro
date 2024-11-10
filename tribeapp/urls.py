@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .scripts.mainapppage import MainPageView,bookingpageview
+from .scripts.mainapppage import MainPageView,bookingpageview,export_data
 
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     path('destroyevent/<int:module_id>',views.destroyevent,name="destroyevent"),
     path('add_amount/', views.add_amount, name='add_amount'),
     path('logout/', views.logout_view, name='logout'),
+    path('download_report/',export_data.as_view(),name='download_report')
     # path("",views.home, name='home')
    
 
