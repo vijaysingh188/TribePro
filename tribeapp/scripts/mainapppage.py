@@ -9,14 +9,12 @@ import csv
 import io
 from pprint import pprint
 
-
 class MainPageView(TemplateView):
     def get(self, request, *args, **kwargs):
         form = TableForm()
         tables = Table.objects.all()
         return render(request,'index.html',{"tables":tables,"form":form})
     def post(self, request):
-
         objects = Table.objects.all()
         form = TableForm(request.POST)
         tablename = request.POST.get('tablename')
@@ -29,8 +27,11 @@ class MainPageView(TemplateView):
         # Convert the time with AM/PM to 24-hour format
         start_time_str = f"{start_timing} {start_am_pm}"
         end_time_str = f"{end_time} {end_am_pm}"
-        start_timing = datetime.strptime(start_time_str, '%I:%M %p').time() if start_time_str else None
-        end_time = datetime.strptime(end_time_str, '%I:%M %p').time() if end_time_str else None
+        start_timing_24 = datetime.strptime(start_time_str, '%I:%M %p').time() if start_time_str else None
+        end_time_24 = datetime.strptime(end_time_str, '%I:%M %p').time() if end_time_str else None
+
+        print(start_timing_24,'==========',end_time_24)
+
         date = datetime.strptime(date, '%Y-%m-%d').date() if date else None
 
         # Check for overlapping bookings
@@ -38,7 +39,7 @@ class MainPageView(TemplateView):
             tablename=tablename,
             date=date
         ).filter(
-            Q(start_timing__lt=end_time, end_time__gt=start_timing)
+            Q(start_timing__lt=end_time_24, end_time__gt=start_timing_24)
         ).exists()
 
         if query:
@@ -46,11 +47,19 @@ class MainPageView(TemplateView):
             return render(request, 'index.html', {"objects": objects, "form": form, "message": message, "message_class": "alert-danger"})
         else:
             if form.is_valid():
-                form.save()
+                # Set the 24-hour formatted times in the form's cleaned_data
+                table_instance = form.save(commit=False)
+                table_instance.start_timing = start_timing_24
+                table_instance.end_time = end_time_24
+                table_instance.date = date
+                
+                # Save the instance to the database
+                table_instance.save()
                 message = "Your Table is successfully booked"
                 return render(request, 'index.html', {"objects": objects, "form": form, "message": message, "message_class": "alert-success"})
             
         return render(request,'index.html',{"objects":objects,"form":form})
+
 
 
 class bookingpageview(TemplateView):
